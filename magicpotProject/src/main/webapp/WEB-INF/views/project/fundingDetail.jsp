@@ -43,14 +43,29 @@
 		  height:auto; text-align:center; margin:auto;}
     
     #category{
-        width:100px; 
-        height:30px; 
+        width:auto;
+        height:45px;
         background-color:rgb(225, 212, 169); 
         display:inline-block;
+        
+        /*휘경*/
+        margin:50px 0px 20px 0px;
+        padding:5px 10px 5px 10px;
+        font-size:17px;
+        border-radius:5px;
     }
     #category>p{font-weight:500; color:white; margin-top:3px;}
 
-    #content1{height:410px;}
+    #content1{
+	    height:410px;
+	    
+	    /*휘경*/
+	    margin-bottom:20px;
+    }
+    /*휘경*/
+    #content1>h2{
+        margin-bottom:15px;
+    }
     #content1_1>img{
         float:left; 
         width:480px; 
@@ -58,8 +73,9 @@
         margin-left:50px;
     }
     
+    
     /*content1_2*/
-    #content1_2{float:left; margin-left:40px;}
+    #content1_2{float:left; margin-left:40px; margin-top:20px;}
     #content1_2_1,#content1_2_2,#content1_2_3,#content1_2_4{float:left;}
 
     #progress{
@@ -76,7 +92,15 @@
         height:45px;
         background-color:rgb(116, 152, 107);
         font-size:19px;
+        border:none;
     }
+    
+    /* 휘경 */
+    #btn-success1:hover{
+        background-color:rgb(78, 104, 72);
+        transition: .6s;
+    }
+    
     .btn-outline-secondary{
         width:110px;
         height:50px;
@@ -123,10 +147,64 @@
 		color:black;	
     }
     
+    /* 휘경 */
+    .reward_1{
+    	padding:30px;
+    	border-radius:5px;
+    	cursor:pointer;
+    }
+    #reward>div:hover{
+    	background-color:rgba(250, 250, 250, 0.726); 
+    }
+    .reward_1 *{
+    	padding-bottom:10px;
+    	
+    }
+    
+    
     /* 다인 추가 - 공유하기 */
     #shareListButton{width:95%;}
     
-   
+    
+    /* [휘경] 좋아요 추가 해제 시 모달 */
+    #likeModal, #dislikeModal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 550px;
+        top: 400px;
+        width: 450px; /* Full width */
+        height: 45px; /* Full height */
+        opacity:0.6;
+        border-radius:5px;
+        text-align:center;
+    }
+
+    /* [휘경] 좋아요 추가 해제 시 모달 */
+    #likeModalContent, #dislikeModalContent {
+        background-color: black;
+        /*margin: 15% auto; /* 15% from the top and centered */
+        color:white;
+        /*width: 30%; /* Could be more or less, depending on screen size */ 
+        text-align:center;
+        padding:5px;
+                                
+    } 
+    
+    /* [휘경] 좋아요 */
+    #heartIcon{
+    	margin-left:7px;
+    	margin-top:2px;
+    	float:left;
+    }
+    #btnArea{
+    	margin-right:10px;
+    }
+    #heart1{
+    	float: left;
+    	margin-left:7px;
+    	margin-top:2px;
+    }
 </style>
 </head>
 <body>
@@ -150,7 +228,7 @@
             
             <div id="content1_2">
                 <div id="content1_2_1">
-                    <span style="font-size:25px;">${ d }</span>일 남음
+                    <b style="font-size:25px;">${ d }</b>일 남음
                 </div>
                 <br><br>
                 <div class="progress" id="progress">
@@ -158,31 +236,51 @@
  				 </div>
                 
                 <div id="content1_2_2" style="margin-top:5px;">
-                    <span style="font-size:25px;">${Math.round(p.proFundPrice div p.proPrice*100)}
-                    </span>%달성
+                    <b style="font-size:25px;">${Math.round(p.proFundPrice div p.proPrice*100)}
+                    </b>% 달성
                 </div><br><br>
 
                 <div id="content1_2_3">
-                    <span style="font-size:25px;">${ p.proFundPrice }</span>원 펀딩
+                    <b style="font-size:25px;"><fmt:formatNumber type="number" value="${ p.proFundPrice }"/></b>원 펀딩
                 </div><br><br>
+                
 
                 <a href="" type="button" class="btn btn-success" id="btn-success1">펀딩하기</a>
                 <br><br>
                 
                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#messageModal"><i class="far fa-envelope fa-2x" style="float: left; margin-left:7px; margin-top:2px;"></i><p>문의</p></button>&nbsp;&nbsp;&nbsp;
                 
-                <!-- !!휘경!! -->
+                
+                
+                <!-- [휘경] 좋아요 -->
                 <c:choose>
                 	<c:when test="${ loginUser == null }">
-                		<span id="btnArea" onclick="swal('', '로그인 후 좋아요 서비스를 이용해보세요!', 'warning');"><button type="button" id="likeBtn" class="btn btn-outline-secondary"><i id="heart1" class="far fa-heart fa-2x" style="float: left; margin-left:7px; margin-top:2px; color:gray;"></i><p id="lCount">${ countLike }</p></button>&nbsp;&nbsp;&nbsp;</span>
+                		<span id="btnArea" onclick="swal('', '로그인 후 좋아요 서비스를 이용해보세요!', 'warning');">
+                			<button type="button" id="likeBtn" class="btn btn-outline-secondary">
+	                			<i id="heart1" class="far fa-heart fa-2x" style="color:gray;"></i>
+	                			<p id="lCount">${ countLike }</p>
+                			</button>
+                		</span>
                 	</c:when>
                 	<c:when test="${ loginUser != null and isChecked eq 1 }">
-	                	<span id="btnArea" onclick="deleteLike();"><button type="button" id="likeBtn" class="btn btn-outline-secondary"><i id="heartIcon" class="far fa-heart fa-2x" style="float: left; margin-left:7px; margin-top:2px; color:red;"></i><p id="lCount">${ countLike }</p></button>&nbsp;&nbsp;&nbsp;</span>
+	                	<span id="btnArea" onclick="deleteLike();">
+	                		<button type="button" id="likeBtn" class="btn btn-outline-secondary">
+	                			<i id="heartIcon" class="far fa-heart fa-2x" style="color:red;"></i>
+	                			<p id="lCount">${ countLike }</p>
+	                		</button>
+	                	</span>
 	                </c:when>
 	                <c:when test="${ loginUser != null and isChecked eq 0 }">
-	                	<span id="btnArea" onclick="insertLike();"><button type="button" id="likeBtn" class="btn btn-outline-secondary"><i id="heartIcon" class="far fa-heart fa-2x" style="float: left; margin-left:7px; margin-top:2px; color:gray;"></i><p id="lCount">${ countLike }</p></button>&nbsp;&nbsp;&nbsp;</span>
+	                	<span id="btnArea" onclick="insertLike();">
+	                		<button type="button" id="likeBtn" class="btn btn-outline-secondary">
+	                			<i id="heartIcon" class="far fa-heart fa-2x" style="color:gray;"></i>
+	                			<p id="lCount">${ countLike }</p>
+	                		</button>
+	                	</span>
                 	</c:when>
                 </c:choose>
+                <!-- [휘경] 좋아요-->
+                
                 
                 <button type="button" id="share" class="btn btn-outline-secondary"><i class="fas fa-share-alt fa-2x" style="float: left; margin-left:7px; margin-top:2px;"></i><p>공유</p></button>
             </div>
@@ -307,59 +405,61 @@
         
         <!-- [휘경] 좋아요 관련 스크립트 시작 -->
         <script>
-        	// [휘경] ajax : 좋아요 취소
+        
+        	/* AJAX : 좋아요 해제  */
 			function deleteLike(){
-	           		$.ajax({
-			    			url:"deleteLike2.pr",
-			    			data:{
-			    					memNo:${ loginUser.memNo },
-			    					proNo:${p.proNo}
-			    			},
-			    			success:function(status){
-			    				
-			    				if(status == "success"){
-			    					$("#heartIcon").css("color", "gray");
-	            					$("#btnArea").attr("onclick", "insertLike();");
-				    				swal("Success!", "좋아하는 프로젝트에서 제거되었습니다.", "success");
-				    				selectLikeCount();
-			    				}else
-			    					swal("", "좋아요 취소를 실패했습니다.", "warning");
-			    				
-			    			},error:function(){
-			    				console.log("댓글 삭제용 ajax 통신 실패");
-			    			}
-		    		})
+           		$.ajax({
+		    			url:"deleteLike2.pr",
+		    			data:{
+		    					memNo:${ loginUser.memNo },						// 로그인한 회원의 회원번호
+		    					proNo:${p.proNo}								// 펀딩 번호
+		    			},
+		    			success:function(status){
+		    				if(status == "success"){							// 좋아요 해제 성공
+		    					$("#heartIcon").css("color", "gray");			// 하트 아이콘의 색상을 회색으로 변경
+            					$("#btnArea").attr("onclick", "insertLike();"); // 좋아요 영역의 onclick 속성을 insertLike()로 변경
+			    				$('#dislikeModal').fadeIn(1200);				// 좋아요 해제 성공 모달창 fadeIn
+		    					setTimeout(function() {							// 좋아요 해제 성공 모달창 fadeOut
+		    						$('#dislikeModal').fadeOut(1300)
+		    					});
+			    				selectLikeCount();								// 좋아요 카운트 조회
+		    				}
+		    			},error:function(){										// 좋아요 해제 실패
+		    				console.log("좋아요 해제용 ajax 통신 실패");
+		    			}
+	    		})
 			}
         	
-			// [휘경] ajax : 좋아요 추가
+			/* AJAX : 좋아요 추가  */
 			function insertLike(){
            		$.ajax({
 		    			url:"insertLike.pr",
 		    			data:{
-		    					memNo:${ loginUser.memNo },
-		    					proNo:${p.proNo}
+		    					memNo:${ loginUser.memNo },						// 로그인한 회원의 회원번호
+		    					proNo:${p.proNo}								// 펀딩 번호
 		    			},
 		    			success:function(status){
-		    				if(status == "success"){ // 좋아요 성공
-		    					$("#heartIcon").css("color", "red");
-            					$("#btnArea").attr("onclick", "deleteLike();");
-			    				swal("Success!", "좋아하는 프로젝트에 추가되었습니다.", "success");
-			    				selectLikeCount(); 
-		    				}else
-		    					swal("", "좋아요 추가를 실패했습니다.", "warning");
-		    				
-		    			},error:function(){
-		    				console.log("댓글 삭제용 ajax 통신 실패");
+		    				if(status == "success"){							// 좋아요 성공
+		    					$("#heartIcon").css("color", "red");			// 하트 아이콘의 색상을 빨간색으로 변경
+            					$("#btnArea").attr("onclick", "deleteLike();");	// 좋아요 영역의 onclick 속성을 deleteLike()로 변경
+			    				$('#likeModal').fadeIn(1200);					// 좋아요 성공 모달창 fadeIn
+			    				setTimeout(function(){							// 좋아요 성공 모달창 fadeOut
+			    					$('#likeModal').fadeOut(1300)
+			    				}); 
+			    				selectLikeCount(); 								// 좋아요 카운트 조회
+		    				}
+		    			},error:function(){										// 좋아요 실패
+		    				console.log("좋아요 추가용 ajax 통신 실패");
 		    			}
 	    		})
 			};
 	         
-	        // [휘경] 좋아요 카운트 조회
+	        /* 좋아요 카운트 조회 호출 */
 	        $(function(){
 	        	selectLikeCount();
 	        });
 	        
-	        // [휘경] ajax : 좋아요 카운트 조회
+	        /* AJAX : 좋아요 카운트 조회 */
 	        function selectLikeCount(){
 	        	$.ajax({
 	        		url:"countLike.pr",
@@ -377,14 +477,38 @@
         </script>
 		<!-- [휘경] 좋아요 관련 스크립트 끝 -->
 		
+		<!-- [휘경] 좋아요 관련 모달 -->
+		<!-- The Modal : 좋아요 추가-->
+		    <div id="likeModal" class="modal">
+		      <!-- Modal content -->
+		      <div class="modal-content" id="likeModalContent">
+		            <p style="text-align: center;">
+		            	<span style="font-size: 20px;">
+		            		좋아하는 프로젝트에 추가되었습니다</span>
+		            </p>
+		      </div>
+		    </div>
+	    <!-- The Modal : 좋아요 해체 -->
+	    <div id="dislikeModal" class="modal">
+	      <!-- Modal content -->
+	      <div class="modal-content" id="dislikeModalContent">
+	            <p style="text-align: center;">
+	            	<span style="font-size: 20px;">
+	            		좋아하는 프로젝트에서 제거되었습니다</span>
+	            </p>
+	      </div>
+	    </div>
+        <!--[휘경] 좋아요 관련 모달 끝-->
+
+		
         <hr>
         <div id="content2">
                 <ul>
                     <li>
-                    	<a id="story" href="#">스토리</a>
+                    	<a id="story" href="#" style="color:rgb(116, 152, 107);"><b>스토리 </b></a>
                     </li>
                     <li>
-                    	<a id="author" href="#">작가의 말</a>
+                    	<a id="author" href="#"><b>작가의 말</b></a>
                     </li>
                 </ul>
         </div><br>
@@ -401,6 +525,8 @@
         		},
         		success:function(p){
         			console.log(p);
+        			$("#story").css("color", "rgb(116, 152, 107)");
+        			$("#author").css("color", "gray");
         			$("#content3_1_1").html(p.proStory);
         		}
         	})
@@ -418,6 +544,8 @@
         		},
         		success:function(p){
         			console.log(p);
+        			$("#author").css("color", "rgb(116, 152, 107)");
+        			$("#story").css("color", "gray");
         			$("#content3_1_1").html(p.createWord);
         		}
         	})
@@ -432,10 +560,10 @@
 
             <div id="reward">
             	<c:forEach var="r" items="${ list }">
-	                <div id="reward_1">
+	                <div id="reward_1" class="reward_1" >
 	              
 		                    <a href="pay.me?rno=${r.rewardNo}">
-		                        <b>${ r.rewardPrice }원 펀딩 </b><br>
+		                        <b style="font-size:17px;">${ r.rewardPrice }원 펀딩 </b><br><br>
 		                        <span>${ r.rewardExplain }</span>
 		                    </a>
 	                

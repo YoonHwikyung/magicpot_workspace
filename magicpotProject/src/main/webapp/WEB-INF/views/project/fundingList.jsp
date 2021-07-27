@@ -437,21 +437,18 @@
 	                <div class="dropdown-menu">
 	                	<c:choose>
 	                	
-	                		<!-- 아무것도 검색하지 않을 경우  -->
 	                		<c:when test="${empty keyword }"> 
 			                   <button id="popular" class="dropdown-item" onclick="location.href='fund.li?ctg=${ctg}'" >인기순</button>
 			                   <button id="popular" class="dropdown-item" onclick="location.href='fund.li?ctg=${ctg}&ctg2=1'" >마감순</button>
 			                   <button id="recent" class="dropdown-item" onclick="location.href='fund.li?ctg=${ctg}&ctg2=2'">최신순</button>
 	                		</c:when>
 	                		
-	                		<!-- 제목으로 검색했을 경우 -->
 	                		<c:when test="${condition == 'title' }">
 	                			<button id="popular" class="dropdown-item" onclick="location.href='search.pr?condition=title&keyword=${keyword }&ctg=${ctg}'" >인기순</button>
 			                   	<button id="popular" class="dropdown-item" onclick="location.href='search.pr?condition=title&keyword=${keyword }&ctg=${ctg}&ctg2=1'">마감순</button>
 			                   	<button id="recent" class="dropdown-item" onclick="location.href='search.pr?condition=title&keyword=${keyword }&ctg=${ctg}&ctg2=2'">최신순</button>
 	                		</c:when>
 	                		
-	                		<!-- 크리에이터 이름으로 검색했을 경우 -->
 	                		<c:when test="${condition == 'writer' }">
 	                			<button id="popular" class="dropdown-item" onclick="location.href='search.pr?condition=writer&keyword=${keyword }&ctg=${ctg}'" >인기순</button>
 			                   	<button id="popular" class="dropdown-item" onclick="location.href='search.pr?condition=writer&keyword=${keyword }&ctg=${ctg}&ctg2=1'">마감순</button>
