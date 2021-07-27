@@ -38,50 +38,54 @@
        </div>
        
             <script>
-	         	// 좋아요 리스트 조회
+            
+	         	/* 좋아요 리스트 조회 호출 */
 	            $(function(){
 	            	selectLikeList();
 	        	})
 	         	
-	        	// ajax : 좋아요 리스트 조회
+	        	/* AJAX : 좋아요 리스트 조회 */
                 function selectLikeList(){
             		$.ajax({
             			url:"likeList.cm",
-            			data:{memNo:${ loginUser.memNo }},		// 로그인한 회원의 회원번호
+            			data:{memNo:${ loginUser.memNo }},																// 로그인한 회원의 회원번호
             			success:function(list){
-            				
-            				var value="";						// 응답데이터로 돌려줄 댓글 리스트 변수
-           					if(Object.keys(list).length == 0){	// 좋아요 리스트가 없는 경우
+            				var value="";																				// 응답 데이터로 돌려줄 좋아요 리스트 변수
+           					if(Object.keys(list).length == 0){															// 좋아요 리스트가 없는 경우
 	           						value += "<div id='noLikeProject' align='center'>"
-	            					      	   + 	"<h5>좋아하는 프로젝트가 없습니다. <br></h5>"
-	            					           +	"<h6>프로젝트의 하트 이미지를 클릭하면 좋아하는 프로젝트에 저장됩니다!</h6>"
-	            					           +	"<br>"
-	            					           +	"<a href='fund.li'> 프로젝트 찾아보기 </a>"
-	            					           + "</div>"
-           					}else{	// 좋아요 리스트가 있는 경우
+            					      	   + 	"<h5>좋아하는 프로젝트가 없습니다. <br></h5>"
+            					           +	"<h6>프로젝트의 하트 이미지를 클릭하면 좋아하는 프로젝트에 저장됩니다!</h6>"
+            					           +	"<br>"
+            					           +	"<a href='fund.li'> 프로젝트 찾아보기 </a>"
+            					           + "</div>"
+           					}else{																						// 좋아요 리스트가 있는 경우
 	            				$.each(list, function(i,obj){
 		            					value += "<div class='thumbnail'>"
-		         					           + 	"<input type='hidden' value=" + obj.proNo + ">"
-		         					           +	"<img src='" + obj.proImage +"'>"
-		         					           +	"<span id='likeBtn' class='likeBtn'><i class='fas fa-heart fa-2x'></i></span>"
-		         					           +	"<small id='projectCtg'>" + obj.caName + "</small>"
-		         					           +	"<p style='margin-top: 0; height: 50px;'>" + obj.proTitle + "</p>"
+		         					           + 	"<input type='hidden' value=" + obj.proNo + ">"						// 프로젝트 번호
+		         					           +	"<img src='" + obj.proImage +"'>"									// 프로젝트 대표 이미지
+		         					           +	"<span id='likeBtn' class='likeBtn'>"
+		         					           +		"<i class='fas fa-heart fa-2x'></i>"
+		         					           +	"</span>"
+		         					           +	"<small id='projectCtg'>" + obj.caName + "</small>"					// 프로젝트 카테고리
+		         					           +	"<p style='margin-top: 0; height: 50px;'>" + obj.proTitle + "</p>"	// 프로젝트 제목
 		         					           +	"<div class='progress' style='height: 10px;'>"
-		         					           +		"<div class='progress-bar' style='width:" + Math.round(obj.proFundPrice / obj.proPrice  *100) + "%;'></div>"
+		         					           +		"<div class='progress-bar' style='width:"
+		         					           + 			Math.round(obj.proFundPrice / obj.proPrice * 100) + "%;'>"	// 프로젝트 진행바
+		         					           +		"</div>"
 		         					           +	"</div>"
 		         					           + 	"<div id='progress_status' style='margin-bottom: 5px;'>"
-		         					           +		"<small style='margin-right: 100px;'>" + Math.round(obj.proFundPrice / obj.proPrice  *100) + "% 달성 </small>"
-		         					           +		"<small>"+ obj.decimalDay + "일 남음</small>"
+		         					           +		"<small style='margin-right: 100px;'>"
+		         					           + 			Math.round(obj.proFundPrice / obj.proPrice * 100) + "% 달성"	// 프로젝트 달성률
+		         					           +		"</small>"
+		         					           +		"<small>"+ obj.decimalDay + "일 남음</small>"						// 프로젝트 남은 기간
 		         					           +	"</div>"
 		         					           + "</div>"     
             					})
-            					
             				}
-            				$("#listArea").html(value);  // 좋아요 리스트
-            				$("#lcount").html(Object.keys(list).length);
-            				
-            			},error:function(){
-            				console.log("댓글 리스트 조회용 ajax 통신 실패");
+            				$("#listArea").html(value);  				 												// 좋아요 리스트 영역에 응답데이터 value 반환
+            				$("#lcount").html(Object.keys(list).length); 												// 좋아하는 프로젝트 카운트 영역에 list의 길이 반환
+            			},error:function(){																				// 좋아요 리스트 조회 실패
+            				console.log("좋아요 리스트 조회용 ajax 통신 실패");
             			}
             		});
             	};
@@ -110,8 +114,10 @@
 		    				var offLikeAlert=document.getElementById("offLikeAlert");
 		    				
 		    				if(status == "success"){
-			    				swal("Success!", "좋아하는 프로젝트에서 제거되었습니다.", "success");
+			    				//swal("Success!", "좋아하는 프로젝트에서 제거되었습니다.", "success");
 			    				//offLikeAlert.style.visibility="visible";
+			    				$('#dislikeModal').fadeIn(1200);
+			    				setTimeout(function() { $('#dislikeModal').fadeOut(1300)});
 			    				selectLikeList();
 		    				}else if(status ="hasComment")
 		    					swal("", "댓글 수정을 실패했습니다.", "warning");
@@ -126,6 +132,29 @@
             
        </div> 
     </div>
+    
+    <!-- [휘경] 좋아요 관련 모달 -->
+	<!-- The Modal : 좋아요 추가-->
+	    <div id="likeModal" class="modal">
+	      <!-- Modal content -->
+	      <div class="modal-content" id="likeModalContent">
+	            <p style="text-align: center;">
+	            	<span style="font-size: 20px;">
+	            		좋아하는 프로젝트에 추가되었습니다</span>
+	            </p>
+	      </div>
+	    </div>
+    <!-- The Modal : 좋아요 해체 -->
+    <div id="dislikeModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content" id="dislikeModalContent">
+            <p style="text-align: center;">
+            	<span style="font-size: 20px;">
+            		좋아하는 프로젝트에서 제거되었습니다</span>
+            </p>
+      </div>
+    </div>
+       <!--[휘경] 좋아요 관련 모달 끝-->
     
     <!-- 푸터 포함 -->
     <jsp:include page="../common/footer.jsp"/>

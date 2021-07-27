@@ -94,3 +94,28 @@ div{box-sizing: border-box; }
         top: 300px;
         left: 300px;
         }
+
+/* [휘경] 좋아요 추가 해제 시 모달 */
+#likeModal, #dislikeModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 550px;
+    top: 300px;
+    width: 450px; /* Full width */
+    height: 45px; /* Full height */
+    opacity:0.6;
+    border-radius:5px;
+    text-align:center;
+}
+
+/* [휘경] 좋아요 추가 해제 시 모달 */
+#likeModalContent, #dislikeModalContent {
+    background-color: black;
+    /*margin: 15% auto; /* 15% from the top and centered */
+    color:white;
+    /*width: 30%; /* Could be more or less, depending on screen size */ 
+    text-align:center;
+    padding:5px;
+                            
+}  
