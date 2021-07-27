@@ -59,8 +59,9 @@
     </div>
     
     <script>
+    	// 채팅창 연결
 	    function openChat(){
-	    	var popup = window.open('startChat.do', 'MagicPot 실시간 상담', 'width=400px,height=600px,status=no,location=no,resizable=no');
+	    	var popup = window.open('startChat.do?memId=${loginUser.memId}', 'MagicPot 실시간 상담', 'width=400px,height=600px,status=no,location=no,resizable=no');
 	    }
     
 		 // 카카오 메세지

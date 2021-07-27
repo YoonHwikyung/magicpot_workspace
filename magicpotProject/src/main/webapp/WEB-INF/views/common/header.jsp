@@ -71,22 +71,6 @@
 	color: rgb(116, 152, 107);
 }
 
-/* TOP버튼, 문의하기 버튼 */
-a#MOVE_TOP_BTN {
-    position: fixed;
-    right: 2%;
-    bottom: 50px;
-    display: none;
-    z-index: 999;
-}
-#MOVE_REQUEST_BTN{
-	position: fixed;
-    right: 2%;
-    bottom: 110px;
-    display: none;
-    z-index: 999;
-}
-#MOVE_REQUEST_BTN_AREA:hover{cursor:pointer;}
 
 </style>
 </head>
@@ -153,7 +137,7 @@ a#MOVE_TOP_BTN {
 		<div id="header_3">
 			<form action="search2.pr" id="search_form">
 				<div class="input-group mb-3" id="search_text" style="width:240px;">
-					<input type="text" style="width:240px;" class="form-control" name="keyword" id="search">
+					<input type="text" style="width:240px; border:0px;" class="form-control" name="keyword" id="search">
 					<div class="input-group-append">
 						<button class="btn btn-success" type="submit" id="searchBtn1" style="background-color: rgb(116, 152, 107);"disabled>
 							<i class="fas fa-search fa-sm" style="padding: 2px;"></i>
@@ -249,7 +233,6 @@ a#MOVE_TOP_BTN {
 		</div>
 	</div>
 	
-	
 	<!-- 검색창에 텍스트 작성시 활성화 -->
 	<script >
 		
@@ -273,7 +256,7 @@ a#MOVE_TOP_BTN {
 		</a>
 	</div>
 	<div id="MOVE_REQUEST_BTN_AREA" style="position:fixed; bottom:110px; right:30px; z-index:99;"> 
-		<a id="MOVE_REQUEST_BTN" onclick="alert('추후 채팅창 연결');">
+		<a id="MOVE_REQUEST_BTN" onclick="openChat();">
 		  <img src="resources/images/common/requestBtn.png" style="width:60px"> 
 		</a>
 	</div>
@@ -303,6 +286,12 @@ a#MOVE_TOP_BTN {
 	        });
 	    });
 	</script>
+	
+	<script>
+		function openChat(){
+	    	var popup = window.open("startChat.do?memId='${loginUser.memId}'", "MagicPot 실시간 상담", "width=400px,height=600px,status=no,location=no,resizable=no");
+	    }
+    </script>
 
 
 </body>

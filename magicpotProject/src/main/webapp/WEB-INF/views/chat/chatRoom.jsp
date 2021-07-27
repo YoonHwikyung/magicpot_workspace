@@ -21,15 +21,44 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 </head>
 <body>
-    <ul id="messages"></ul>
     
     <div id="titleLine">
-        <div align="center"><i class="fas fa-headset"></i> MagicPot 헬프센터 </div>
+        <div align="center"><i class="fas fa-headset"></i>&nbsp&nbspMagicPot 헬프센터 </div>
     </div>
     
-    <form action="" id="chat-form">
-    <input id="m" autocomplete="off" placeholder="메세지를 입력해주세요"/><button><i class="fas fa-paper-plane"></i></button>
-    </form>
+    <div id="messageArea">
+   		
+   	</div>
+    
+    <div id="chat-form">
+    <input type="text" id="message" autocomplete="off" placeholder="메세지를 입력해주세요"/>
+    <button id="sendBtn" value="submit"><i class="fas fa-paper-plane"></i></button>
+    </div>
+    
+    <script type="text/javascript">
+		$("#sendBtn").click(function() {
+			sendMessage();
+			$('#message').val('')
+		});
+	
+		let sock = new SockJS("http://localhost:8883/echo/");
+		sock.onmessage = onMessage;
+		sock.onclose = onClose;
+		// 메시지 전송
+		function sendMessage() {
+			sock.send($("#message").val());
+		}
+		// 서버로부터 메시지를 받았을 때
+		function onMessage(msg) {
+			var data = msg.data;
+			$("#messageArea").append(data + "<br/>");
+		}
+		// 서버와 연결을 끊었을 때
+		function onClose(evt) {
+			$("#messageArea").append("연결 끊김");
+	
+		}
+</script>
     
 </body>
 </html>

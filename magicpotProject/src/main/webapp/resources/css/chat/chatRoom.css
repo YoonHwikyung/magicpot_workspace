@@ -14,7 +14,7 @@ background-color: white;
     font-weight: bold;
     color:white;
 }
-form {
+#chat-form {
 background: #eee;
 padding: 3px;
 position:
@@ -22,14 +22,14 @@ fixed;
 bottom: 0; 
 width: 100%; 
 }
-form input {
+#chat-form input {
 border: 0; 
 /* border-radius: 5px; */
 padding: 10px; 
 width: 90%; 
 margin-right:0.5%; 
 }
-form button {
+#chat-form button {
 width: 9%; 
 /* border-radius: 5px; */
 background: white;
@@ -40,4 +40,7 @@ padding: 10px;
 list-style-type: none; 
 margin: 0; 
 padding: 0; 
+}
+input:focus {
+    outline: none;
 }
