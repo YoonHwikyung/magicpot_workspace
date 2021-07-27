@@ -1,4 +1,4 @@
-package com.kh.magicpot.community.controller;
+ package com.kh.magicpot.community.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -79,10 +79,10 @@ public class CommunityController {
 	
 	/**
 	 * 커뮤니티 검색
-	 * @param currentPage
-	 * @param ctg
-	 * @param condition
-	 * @param cmKeyword
+	 * @param currentPage	현재 페이지
+	 * @param ctg			커뮤니티 카테고리
+	 * @param condition		검색 옵션
+	 * @param cmKeyword		검색 키워드
 	 * @param model
 	 * @param map
 	 * @return
@@ -95,22 +95,21 @@ public class CommunityController {
 			  					  Model model,
 			  					  HashMap<String, Object> map
 			  					  ) {
-		// HashMap에 담아서 요청
+		/* HashMap에 담아서 요청 */
 		map.put("currentPage",currentPage);
 		map.put("ctg", ctg);
 		map.put("condition", condition);
 		map.put("cmKeyword", cmKeyword);
 		
-		// 커뮤니티 공지사항 리스트 조회
+		/* 커뮤니티 공지사항 리스트 조회 */
 		ArrayList<CommunityNotice> cnList = cService.selectCmNoticeList();
 		
-		// 검색 조건에 만족하는 게시글 총 갯수 조회 , 검색 조건에 만족하는 페이징 처리
+		/* 검색 조건에 만족하는 게시글 총 갯수 조회 , 검색 조건에 만족하는 페이징 처리 */
 		int searchCount = cService.selectSearchListCount(map);
-		
 		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 12);
 		ArrayList<Community> cList = cService.selectSearchList(pi, map);
 		
-		// Model 객체에 응답데이터 담기
+		/* Model 객체에 응답데이터 담기 */
 		model.addAttribute("cnList", cnList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("cList", cList);
@@ -119,7 +118,6 @@ public class CommunityController {
 		model.addAttribute("cmKeyword", cmKeyword);
 
 		return "community/communityListView";
-		
 	}
 	
 	/**
@@ -303,8 +301,8 @@ public class CommunityController {
 	
 	/**
 	 * 커뮤니티 게시글 상세조회
-	 * @param cmNo
-	 * @param model
+	 * @param cmNo 
+	 * @param model	
 	 * @return
 	 */
 	@RequestMapping("detail.cm")
@@ -313,11 +311,13 @@ public class CommunityController {
 		// 조회수 증가
 		int result = cService.increaseCmCount(cmNo);
 		
-		if(result > 0) { // 조회수 증가 성공 => 게시글 상세조회 요청
+		// 조회수 증가 성공 => 게시글 상세조회 요청
+		if(result > 0) { 
 			Community cm = cService.selectCommunity(cmNo);
 			model.addAttribute("cm", cm);
 			return "community/communityDetailView";
-		}else { // 에러페이지
+		// 조회수 증가 실패 => 에러 페이지
+		}else { 
 			return "common/errorPage";
 		}
 	}

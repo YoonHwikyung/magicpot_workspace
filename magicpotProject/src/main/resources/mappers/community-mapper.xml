@@ -313,11 +313,11 @@
 		     , to_char(enroll_date, 'YYYY-MM-DD HH24:MI') enroll_date
 		     , status
 		  from cm_comment
-		where cm_no = #{cmNo}
-		  and status = 'Y'
-		start with cmco_ref = 0
-		connect by prior cmco_no = cmco_ref
-		order siblings by enroll_date asc
+		 where cm_no = #{cmNo}
+		   and status = 'Y'
+		 start with cmco_ref = 0
+	   connect by prior cmco_no = cmco_ref
+		 order siblings by enroll_date asc
 	</select>
 	
 	<!-- 커뮤니티 댓글 등록 -->

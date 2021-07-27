@@ -188,11 +188,13 @@
                 </select>
                 <input id="cm_keyword" type="text" name="cmKeyword" value="${ cmKeyword }" placeholder=" Search">
                 <input type="hidden" name="ctg" value="${ ctg }">
-                <button type="submit" class="btn btn-success"><i class="fas fa-search fa-sm" style="padding: 2px 7px 2px 7px;"></i></button>
+                <button type="submit" class="btn btn-success">
+                	<i class="fas fa-search fa-sm" style="padding: 2px 7px 2px 7px;"></i>
+                </button>
             </form>
         </div>
         
-        <!-- requestScope의 condition의 키값으로 존재하는 값이 있을 경우에 실행할 script (검색을 했을 경우)-->
+        <!-- 검색 결과 페이지에서 검색어 유지 -->
         <c:if test="${ !empty condition }">
         	<script>
         	$(function(){
@@ -368,7 +370,7 @@
 	                    </c:choose>
 	                    
 	                    <c:choose>
-	                    	<c:when test=" ${ pi.currentPage eq pi.maxPage }">
+	                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
 		                    	<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
 		                    </c:when>
 		                    <c:otherwise>

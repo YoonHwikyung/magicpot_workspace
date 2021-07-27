@@ -60,7 +60,7 @@
             
             <!-- 로그인 && 로그인 유저=글쓴이인 경우 보이는 수정/삭제 버튼, 로그인 && 로그인 유저 = 관리자일 경우 삭제 버튼 -->
             <c:if test="${ !empty loginUser}">
-            	<c:if test="${ loginUser.memId eq cm.memId }">
+            	<c:if test="${ loginUser.memId eq cm.memId}">
 		        <div id="WriterBtnArea" align="center">
 		                <span id="WriterBtnArea2" style="margin-left: 800px;">
 		                    <a class="btn btn-success" onclick="postFormSubmit(1);">수정</a>
@@ -158,7 +158,6 @@
                 	// 댓글 작성 : 유효성 검사 후 댓글 작성 함수 addComment() 호출
                 	function beforeEnrollContent(){
                 		var cmCommentContent = $("#enrollContent").val();
-                		//alert(cmCommentContent);
                 		if(cmCommentContent.trim().length != 0){
                 			addComment(0, 0, cmCommentContent);
                 		} else{
@@ -176,7 +175,7 @@
 	            		// => 메인페이지 : 실시간 리스트
 	            	})
             	
-	            	// ajax : 댓글 등록
+	            	/* AJAX : 댓글 등록 */
 	            	function addComment(cmCommentNo, cmCommentDepth, cmCommentContent){
 						
 	        			var cmCommentNo 	 = parseInt(cmCommentNo);		// 댓글번호 담기     (댓글 등록 시 CMCO_REF가 된다)
@@ -279,14 +278,15 @@
                 
                 
                 <script>
+                
+                	/* 대댓글 창 열기_1 : 변수 세팅  */
                 	var a = 0;					// 대댓글 창 열고 닫기 위한 변수
                 	var cmCommentNo = 0;		// 참조하고있는 댓글 번호를 담을 변수
                 	var cmCommentDepth = 0;		// 참조하고있는 댓글 깊이를 담을 변수
-                	var cmCommentContent = "";	// 
+                	var cmCommentContent = "";	// 대댓글 내용을 담을 변수
                 	
-	             	// 대댓글 창 열기 (동적으로 만들어진 댓글리스트 내에 댓글 버튼 클릭 시 해당 댓글에 대한 대댓글 창 열기)
+                	/* 대댓글 창 열기_2 : 동적으로 만들어진 댓글리스트 내에 댓글 버튼 클릭 시 해당 댓글에 대한 대댓글 창 열기 */
 	         		$(document).on("click", ".reComment", function(){
-						//alert("클릭됨");
 						cmCommentNo 	= $(this).parents(".cmComment").children().eq(0).val();
 						cmCommentDepth 	= $(this).parents(".cmComment").children().eq(1).val();
 						cmMemId 		= $(this).parents(".cmComment").children().eq(2).val();
@@ -294,34 +294,35 @@
 	         			var reCommentVar = "";
 						reCommentVar += "<div id='reComment' align='center' style='margin-top:10px; background-color:white;'>"
 					                  + 	"<div style='color:rgb(83, 83, 83);'>" + "${loginUser.memId}" + "</div>"
-					                  + 	"<textarea class='reCoContent' style='width:90%;' rows='3' placeholder='댓글을 남겨보세요' >"+ " @" + cmMemId + "&nbsp;" + "</textarea>"
+					                  + 	"<textarea class='reCoContent' style='width:90%;' rows='3' placeholder='댓글을 남겨보세요' >"
+					                  + 		" @" + cmMemId + "&nbsp;"
+					                  +		"</textarea>"
 					                  + 	"<a class='btn btn-success btn-sm reCommentClose' style='margin-left:80%;' >취소</a>"
 					                  + 	"<a class='btn btn-success btn-sm addComment2' style='margin-left:5px;' >등록</a> </div>";
 					                  + "</div>";      
-					                  
-					   if(a == 0){ // 전역변수 a를 활용하여 대댓글창 열고 닫기
+					   
+					   /* 전역변수 a를 활용하여 대댓글창 열고 닫기 */
+					   if(a == 0){ 
 						   $(this).parent().append(reCommentVar);
 							a++;
 					   }else if(a == 1){
 						   $("#reComment").remove();
 						   a--;
 					   }
-					   
 					});
 					
-	             	// 대댓글 창 제거(대댓글 창 안 취소 버튼 클릭 시)
+	             	/* 대댓글 창 제거(대댓글 창 안 취소 버튼 클릭 시) */
 					$(document).on("click", ".reCommentClose", function(){
 						$("#reComment").remove();
 					});
 	             	
-	             	// 대댓글 등록
+	             	/* 대댓글 등록 */
 	             	$(document).on("click", ".addComment2", function(){
 	             		cmCommentContent = $(this).siblings(".reCoContent").val();
-	             		//alert(cmCommentContent);
 	             		addComment(cmCommentNo, cmCommentDepth, cmCommentContent);
 	             	})
 	             	
-	             	// ajax : 댓글 삭제
+	             	/* AJAX : 댓글 삭제 */
 	             	$(document).on("click", ".deleteComment", function(){
 	             		cmCommentNo = $(this).parents(".cmComment").children().eq(0).val();
 	             		//alert(cmCommentNo);
@@ -343,26 +344,27 @@
 		    			
 	             	})
 	             	
-	             	// 댓글 수정 화면으로 변환
+	             	/* 댓글 영역 수정 div로 변환 */
 	             	$(document).on("click", ".updateCommentForm", function(){
-	             		//alert("수정 클릭");
-	             		cmCommentNo  = $(this).parents(".cmComment").children().eq(0).val();
-	             		oldComment   = $(this).parents(".cmComment").children().eq(3).val();
-						//alert(oldComment);
+	             		cmCommentNo  = $(this).parents(".cmComment").children().eq(0).val(); // 댓글 번호
+	             		oldComment   = $(this).parents(".cmComment").children().eq(3).val(); // 수정 전 댓글 내용
 	             		var reCommentUpdateVar = "";
 	             		reCommentUpdateVar += "<div id='reComment' align='center' style='margin-top:10px;'>"
-	             							+ 	"<input type='hidden' value=" + cmCommentNo + ">" // 댓글번호
-							                + 	"<div style='color:rgb(83, 83, 83);'>" + "${loginUser.memId}" + "</div>"
-							                + 	"<textarea class='reCoContent2' id='updateContent' cols='90' rows='3'  placeholder='댓글을 남겨보세요' >"+ oldComment + "</textarea>"
-							                + 	"<a class='btn btn-success btn-sm cancelUpdate' style='margin-left:670px;' >취소</a>"
-							                + 	"<a class='btn btn-success btn-sm updateComment2' style='margin-left:5px;' >수정</a> </div>"
+	             							+ 	"<input type='hidden' value="
+	             							+ 		cmCommentNo	// 댓글번호
+	             							+ 	">" 
+							                + 	"<div style='color:rgb(83, 83, 83);'>"
+							                + 		"${loginUser.memId}"
+							                + 	"</div>"
+							                + 	"<textarea class='reCoContent2' id='updateContent' cols='90' rows='3' placeholder='댓글을 남겨보세요' >"
+							                + 		oldComment // 수정 전 댓글 내용
+							                + 	"</textarea>"
+							                + 	"<a class='btn btn-success btn-sm cancelUpdate' style='margin-left:670px;'>취소</a>"
+							                + 	"<a class='btn btn-success btn-sm updateComment2' style='margin-left:5px;'>수정</a>"
 							                + "</div>";
-						//$('#rid' + rid).replaceWith(htmls);
-						$(this).parents(".cmComment").replaceWith(reCommentUpdateVar);
-						//$('.reCoContent2').focus(); // => *보완필요 : 커서 끝으로 이동시키고 싶음
-	             	
-						var len = $(this).parents(".cmComment").children().eq(3).val().length;
-						$('.reCoContent2').focus(); // => *보완필요 : 커서 끝으로 이동시키고 싶음
+						$(this).parents(".cmComment").replaceWith(reCommentUpdateVar); 			// 댓글 수정 클릭 시 댓글 영역을 수정 div로 변환
+						var len = $(this).parents(".cmComment").children().eq(3).val().length; // 댓글 수정 클릭 시 focus를 댓글 내용 끝으로 배치
+						$('.reCoContent2').focus();
 						$('.reCoContent2')[0].setSelectionRange(len, len);
 	             	})
 	             	

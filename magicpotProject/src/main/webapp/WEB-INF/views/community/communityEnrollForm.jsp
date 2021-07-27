@@ -74,10 +74,10 @@
                         <tr>
                             <td colspan="2">
                                 <div id="imageUpfileArea" style="border:1px solid lightgrey; float: left;">
-                                    <label id="imageUpfile" for="cmImage" ><i class="fas fa-camera"></i>대표이미지 등록</label>
+                                    <label id="imageUpfile" for="cmImage" ><i class="fas fa-camera"></i>썸네일 이미지 등록</label>
                                     <input type="file" id="cmImage" class="form-control-file border" name="upfile" style="display:none;">
                                 </div>
-                                <input type="text" id="cmImageTitle" value="선택된 대표이미지 없음" readonly>
+                                <input type="text" id="cmImageTitle" value="업로드 시 썸네일 이미지로 지정됩니다" readonly>
                             </td>
                         </tr>
                         <tr>
