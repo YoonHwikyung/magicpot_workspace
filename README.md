@@ -32,7 +32,8 @@
 ![MagicPot_ERD](https://user-images.githubusercontent.com/78246187/127444877-dda61529-a8ff-40ce-bb8b-bff21db3ea05.png) <br><br>
 💻 개발자
 ---
-팀원들 링크 추가하기
+| <img src="https://avatars.githubusercontent.com/u/82758086?v=4" width="55" height="55"><br>[류길상](https://github.com/mmnn323)| <img src="https://avatars.githubusercontent.com/u/79910342?v=4" width="55" height="55"><br>[오다인](https://github.com/dada411) | <img src="https://avatars.githubusercontent.com/u/78246187?v=4" width="55" height="55"><br>[윤휘경](https://github.com/YoonHwikyung) | <img src="https://avatars.githubusercontent.com/u/82549746?v=4" width="55" height="55"><br>[장아영](https://github.com/jay12355) | <img src="https://avatars.githubusercontent.com/u/81214004?v=4" width="55" height="55"><br>[현시은](https://github.com/tldms0012) | <img src="https://avatars.githubusercontent.com/u/77088467?v=4" width="55" height="55"><br>[홍희나](https://github.com/Heenahong) |
+| --- | --- | --- | --- | --- | --- |
 - - -
 🙋‍♀️ 역할
 ---
