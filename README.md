@@ -1,4 +1,4 @@
-🌱 매직팟 프로젝트 🌱
+🌱 매직팟 프로젝트 _ hwikyungYoon🌱
 ===
 <br><br>
 <img src="https://user-images.githubusercontent.com/78246187/127439231-f93669bc-b51c-45f5-8682-22dc265af493.png" width="70%" height="40%" title="50px" alt="Jejuwa_Main"></img>  
